@@ -6,7 +6,7 @@ import { db } from '../firebaseConfig';
 
 const ProfileSetup = ({ onRoleUpdate }) => {
   const [name, setName] = useState('');
-  const [role, setRole] = useState('Student');
+  const [role, setRole] = useState('Student'); // Default to "Student"
   const [phone, setPhone] = useState('');
   const [email, setEmail] = useState('');
   const [bio, setBio] = useState('');
@@ -69,39 +69,45 @@ const ProfileSetup = ({ onRoleUpdate }) => {
             <option value="Tutor">Tutor</option>
           </select>
         </label>
-        <label>
-          Phone Number:
-          <input
-            type="text"
-            value={phone}
-            onChange={(e) => setPhone(e.target.value)}
-            placeholder="(555) 123-4567"
-            required
-          />
-        </label>
-        <label>
-          Email:
-          <input
-            type="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            required
-          />
-        </label>
-        <label>
-          Bio (Optional):
-          <textarea
-            value={bio}
-            onChange={(e) => setBio(e.target.value)}
-          />
-        </label>
-        <label>
-          Typical Schedule (Optional):
-          <textarea
-            value={schedule}
-            onChange={(e) => setSchedule(e.target.value)}
-          />
-        </label>
+        
+        {role === 'Tutor' && ( // Conditionally render these fields for tutors
+          <>
+            <label>
+              Phone Number:
+              <input
+                type="text"
+                value={phone}
+                onChange={(e) => setPhone(e.target.value)}
+                placeholder="(555) 123-4567"
+                required
+              />
+            </label>
+            <label>
+              Email:
+              <input
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                required
+              />
+            </label>
+            <label>
+              Bio (Optional):
+              <textarea
+                value={bio}
+                onChange={(e) => setBio(e.target.value)}
+              />
+            </label>
+            <label>
+              Typical Schedule (Optional):
+              <textarea
+                value={schedule}
+                onChange={(e) => setSchedule(e.target.value)}
+              />
+            </label>
+          </>
+        )}
+        
         <button type="submit">Save Profile</button>
       </form>
     </div>
