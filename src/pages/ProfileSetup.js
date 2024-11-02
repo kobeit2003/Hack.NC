@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
-import { doc, getDoc, setDoc, updateDoc } from 'firebase/firestore';
+import { doc, getDoc, setDoc } from 'firebase/firestore';
 import { db } from '../firebaseConfig';
 
 const ProfileSetup = ({ onRoleUpdate }) => {
@@ -9,7 +9,6 @@ const ProfileSetup = ({ onRoleUpdate }) => {
   const [role, setRole] = useState('Student'); // Default to "Student"
   const { currentUser } = useAuth();
   const navigate = useNavigate();
-  const [initialData, setInitialData] = useState({ name: '', role: '' }); // Track initial profile data
 
   useEffect(() => {
     // Fetch existing profile data if it exists
@@ -22,7 +21,6 @@ const ProfileSetup = ({ onRoleUpdate }) => {
             const userData = docSnap.data();
             setName(userData.name || '');
             setRole(userData.role || 'Student');
-            setInitialData({ name: userData.name || '', role: userData.role || 'Student' });
           }
         } catch (error) {
           console.error('Error fetching profile:', error);
@@ -36,28 +34,18 @@ const ProfileSetup = ({ onRoleUpdate }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Only save if there’s a change in name or role
-    if (name === initialData.name && role === initialData.role) {
-      alert('No changes detected.');
-      return;
-    }
-
     try {
       const docRef = doc(db, 'users', currentUser.uid);
       const updatedData = { name, role };
 
-      // If this is the first time setting up the profile, use setDoc to create the document
+      // Save the updated profile data
       await setDoc(docRef, updatedData, { merge: true });
       
       // Update the role in App.js using onRoleUpdate callback
       onRoleUpdate(role);
 
       // Redirect based on role
-      if (role === 'Tutor') {
-        navigate('/tutor-dashboard');
-      } else {
-        navigate('/student-dashboard');
-      }
+      navigate(role === 'Tutor' ? '/tutor-dashboard' : '/student-dashboard');
     } catch (error) {
       console.error('Error saving profile:', error);
     }

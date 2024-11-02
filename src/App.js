@@ -12,7 +12,7 @@ import { doc, getDoc } from 'firebase/firestore';
 function App() {
   const { currentUser } = useAuth();
   const [userRole, setUserRole] = useState(null);
-  const [isProfileComplete, setIsProfileComplete] = useState(false); // Track profile completion
+  const [isProfileComplete, setIsProfileComplete] = useState(false);
 
   useEffect(() => {
     if (isSignInWithEmailLink(auth, window.location.href)) {
@@ -41,7 +41,7 @@ function App() {
           if (docSnap.exists()) {
             const data = docSnap.data();
             setUserRole(data.role);
-            setIsProfileComplete(data.name && data.role); // Profile is complete if name and role exist
+            setIsProfileComplete(data.name && data.role);
           } else {
             setIsProfileComplete(false);
           }
@@ -54,10 +54,15 @@ function App() {
     fetchUserProfile();
   }, [currentUser]);
 
+  // Function to update the user role
+  const handleRoleUpdate = (role) => {
+    setUserRole(role);
+    setIsProfileComplete(true); // Mark the profile as complete when the role is updated
+  };
+
   return (
     <Router>
       <Routes>
-        {/* Redirect authenticated users based on profile completion */}
         <Route
           path="/"
           element={
@@ -70,21 +75,20 @@ function App() {
               : <SignIn />
           }
         />
-        {/* Profile setup route */}
         <Route
           path="/profile-setup"
           element={
-            currentUser && !isProfileComplete ? <ProfileSetup /> : <Navigate to="/" />
+            currentUser 
+              ? <ProfileSetup onRoleUpdate={handleRoleUpdate} /> // Pass the handler here
+              : <Navigate to="/" />
           }
         />
-        {/* Tutor Dashboard route */}
         <Route
           path="/tutor-dashboard"
           element={
             currentUser && userRole === 'Tutor' ? <TutorDashboard /> : <Navigate to="/" />
           }
         />
-        {/* Student Dashboard route */}
         <Route
           path="/student-dashboard"
           element={

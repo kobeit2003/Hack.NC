@@ -5,13 +5,20 @@ import { collection, query, where, getDocs } from 'firebase/firestore';
 import { useNavigate } from 'react-router-dom'; // Import useNavigate
 
 const StudentDashboard = () => {
-  const { signOut } = useAuth(); // Access signOut from AuthContext
+  const { currentUser, signOut } = useAuth(); // Access signOut and currentUser from AuthContext
   const [tutors, setTutors] = useState([]);
   const [filteredTutors, setFilteredTutors] = useState([]);
   const [classCodeFilter, setClassCodeFilter] = useState('');
   const navigate = useNavigate(); // Initialize useNavigate
 
   useEffect(() => {
+    // Check if the user is authenticated before fetching tutors
+    if (!currentUser) {
+      console.error('No current user, redirecting to sign-in.');
+      navigate('/'); // Redirect to sign-in if not authenticated
+      return; // Exit early if there's no current user
+    }
+
     const fetchTutors = async () => {
       try {
         const tutorsRef = collection(db, 'users');
@@ -29,7 +36,7 @@ const StudentDashboard = () => {
     };
 
     fetchTutors();
-  }, []);
+  }, [currentUser]); // Re-run effect when currentUser changes
 
   const handleFilterChange = (e) => {
     const input = e.target.value;
@@ -49,7 +56,10 @@ const StudentDashboard = () => {
     <div>
       <h1>Available Tutors</h1>
       <button onClick={signOut}>Sign Out</button> {/* Sign Out Button */}
-      <button onClick={() => navigate('/profile-setup')}>Go to Profile Setup</button> {/* Navigate to Profile Setup */}
+      <button onClick={() => {
+  console.log('Navigating to Profile Setup');
+  navigate('/profile-setup'); // Navigate to Profile Setup
+}}>Go to Profile Setup</button>
 
       <div>
         <label>

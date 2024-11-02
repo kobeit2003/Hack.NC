@@ -16,7 +16,6 @@ const AuthProvider = ({ children }) => {
     return unsubscribe;
   }, []);
 
-  // Register a new user with email and password
   const register = async (email, password) => {
     try {
       await createUserWithEmailAndPassword(auth, email, password);
@@ -27,13 +26,12 @@ const AuthProvider = ({ children }) => {
     }
   };
 
-  // Sign in an existing user with email and password
   const signInWithEmail = async (email, password) => {
     try {
       await signInWithEmailAndPassword(auth, email, password);
     } catch (error) {
       console.error('Error signing in:', error);
-      alert('Sign-in failed. Please check your credentials.');
+      alert(`Sign-in failed: ${error.message}`); // Display error message to user
     }
   };
 
