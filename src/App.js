@@ -8,6 +8,8 @@ import ProfileSetup from './pages/ProfileSetup';
 import TutorDashboard from './pages/TutorDashboard';
 import StudentDashboard from './pages/StudentDashboard';
 import { doc, getDoc } from 'firebase/firestore';
+import TutorProfile from './pages/TutorProfile'; // Adjust the path as necessary
+
 
 function App() {
   const { currentUser } = useAuth();
@@ -94,6 +96,10 @@ function App() {
           element={
             currentUser && userRole === 'Student' ? <StudentDashboard /> : <Navigate to="/" />
           }
+        />
+        <Route
+            path="/tutor-profile/:id"
+            element={<TutorProfile />} // This assumes you will pass tutorId as a prop
         />
       </Routes>
     </Router>

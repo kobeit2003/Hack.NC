@@ -6,24 +6,27 @@ import { db } from '../firebaseConfig';
 
 const ProfileSetup = ({ onRoleUpdate }) => {
   const [name, setName] = useState('');
-  const [role, setRole] = useState('Student'); // Default to "Student"
+  const [role, setRole] = useState('Student');
+  const [phone, setPhone] = useState('');
+  const [email, setEmail] = useState('');
+  const [bio, setBio] = useState('');
+  const [schedule, setSchedule] = useState('');
   const { currentUser } = useAuth();
   const navigate = useNavigate();
 
   useEffect(() => {
-    // Fetch existing profile data if it exists
     const fetchProfile = async () => {
       if (currentUser) {
-        try {
-          const docRef = doc(db, 'users', currentUser.uid);
-          const docSnap = await getDoc(docRef);
-          if (docSnap.exists()) {
-            const userData = docSnap.data();
-            setName(userData.name || '');
-            setRole(userData.role || 'Student');
-          }
-        } catch (error) {
-          console.error('Error fetching profile:', error);
+        const docRef = doc(db, 'users', currentUser.uid);
+        const docSnap = await getDoc(docRef);
+        if (docSnap.exists()) {
+          const userData = docSnap.data();
+          setName(userData.name || '');
+          setRole(userData.role || 'Student');
+          setPhone(userData.phone || '');
+          setEmail(userData.email || '');
+          setBio(userData.bio || '');
+          setSchedule(userData.schedule || '');
         }
       }
     };
@@ -33,18 +36,13 @@ const ProfileSetup = ({ onRoleUpdate }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+    
     try {
       const docRef = doc(db, 'users', currentUser.uid);
-      const updatedData = { name, role };
+      const updatedData = { name, role, phone, email, bio, schedule };
 
-      // Save the updated profile data
       await setDoc(docRef, updatedData, { merge: true });
-      
-      // Update the role in App.js using onRoleUpdate callback
       onRoleUpdate(role);
-
-      // Redirect based on role
       navigate(role === 'Tutor' ? '/tutor-dashboard' : '/student-dashboard');
     } catch (error) {
       console.error('Error saving profile:', error);
@@ -70,6 +68,39 @@ const ProfileSetup = ({ onRoleUpdate }) => {
             <option value="Student">Student</option>
             <option value="Tutor">Tutor</option>
           </select>
+        </label>
+        <label>
+          Phone Number:
+          <input
+            type="text"
+            value={phone}
+            onChange={(e) => setPhone(e.target.value)}
+            placeholder="(555) 123-4567"
+            required
+          />
+        </label>
+        <label>
+          Email:
+          <input
+            type="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            required
+          />
+        </label>
+        <label>
+          Bio (Optional):
+          <textarea
+            value={bio}
+            onChange={(e) => setBio(e.target.value)}
+          />
+        </label>
+        <label>
+          Typical Schedule (Optional):
+          <textarea
+            value={schedule}
+            onChange={(e) => setSchedule(e.target.value)}
+          />
         </label>
         <button type="submit">Save Profile</button>
       </form>

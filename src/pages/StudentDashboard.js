@@ -74,18 +74,19 @@ const StudentDashboard = () => {
       </div>
 
       <div>
-        {filteredTutors.length > 0 ? (
-          <ul>
-            {filteredTutors.map((tutor) => (
-              <li key={tutor.id}>
-                <h2>{tutor.name}</h2>
-                <p>Classes: {tutor.classes ? tutor.classes.join(', ') : 'No classes listed'}</p>
-              </li>
-            ))}
-          </ul>
-        ) : (
-          <p>No tutors available for this class code.</p>
-        )}
+      {filteredTutors.length > 0 ? (
+  <ul>
+    {filteredTutors.map((tutor) => (
+      <li key={tutor.id}>
+        <h2>{tutor.name}</h2>
+        <p>Classes: {tutor.classes ? tutor.classes.join(', ') : 'No classes listed'}</p>
+        <button onClick={() => navigate(`/tutor-profile/${tutor.id}`)}>View Profile</button>
+      </li>
+    ))}
+  </ul>
+) : (
+  <p>No tutors available for this class code.</p>
+)}
       </div>
     </div>
   );
