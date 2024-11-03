@@ -4,6 +4,7 @@ GlobalWorkerOptions.workerSrc = `https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2
 export async function gradeCheck(transcriptFile, classes) { 
     // Read the PDF file as ArrayBuffer
     const fileReader = new FileReader();
+    const stripsClasses = classes.map(x => x.replaceAll(' ',''))
     console.log(classes)
     fileReader.readAsArrayBuffer(transcriptFile);
 
@@ -27,12 +28,6 @@ export async function gradeCheck(transcriptFile, classes) {
                         textContent += item.str + ' ';
                     });
                 }
-                // console.log(textContent)
-                // Use regular expression to find course and grade
-                // const regex = /([A-Z]{4}\s\d{3})\s+\w+(?:\s\w+)*\s+\d+\.\d+\s+([A-F][+-]?)/g;
-                // const regex = /([A-Z]{4}\s\d{3})\s+.*?\s+\d+\.\d+\s+([A-F][+-]?)/g;
-                // const regex = /([A-Z]{4}\s\d{3})\s+(.+?)\s+(\d+\.\d+)\s+([A-F][+-]?)\s+(\d+\.\d+)/g;
-                // const regex = /([A-Z]{4}\s{3}\d{3}\s+(.+?)\s+(\d+\.\d+)\s+([A-F][+-]?)\s+(\d+\.\d+))/g;
                 const regex = /(?<Course>\b[A-Z]{3,4}\s+\d{3})(?<Description>.*?)(?<Grade>\s[A-F][+-]?\s)/g
                 let match;
                 
@@ -40,19 +35,13 @@ export async function gradeCheck(transcriptFile, classes) {
                 while ((match = regex.exec(textContent)) !== null) {
                     debugger;
                     console.log(match.groups)
-                    // const course = match[1];
-                    // const courseGrade = match[2];
-                    const course = match.groups.Course;
-                    if (classes.includes(course)){
+                   
+                    const course = match.groups.Course.replaceAll(' ','');
+                    if (stripsClasses.includes(course)){
                         debugger;
                         resolve(match.groups.Grade)
                     }
-                    // Check if the course matches the specified course code
-                    // if (course === courseCode) {
-                    //     console.log({course,courseGrade});
-                    //     resolve(courseGrade); // Resolve with the found grade
-                    //     return;
-                    // }
+                    
                 }
 
                 // If course not found, resolve with null
