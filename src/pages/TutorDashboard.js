@@ -95,7 +95,7 @@ const TutorDashboard = () => {
                         placeholder="e.g., STOR-435 (Must be all Caps)"
                         className="block w-full p-3 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-300 mb-4"
                     />
-                    <button onClick={handleAddClass(classCode)} className="w-full py-2 px-4 bg-blue-500 text-white font-semibold rounded hover:bg-blue-600 focus:outline-none">
+                    <button onClick={handleAddClass} className="w-full py-2 px-4 bg-blue-500 text-white font-semibold rounded hover:bg-blue-600 focus:outline-none">
                         Add Class
                     </button>
                 </div>
