@@ -28,7 +28,7 @@ export async function gradeCheck(transcriptFile, classes) {
                         textContent += item.str + ' ';
                     });
                 }
-                const regex = /(?<Course>\b[A-Z]{3,4}\s+\d{3})(?<Description>.*?)(?<Grade>\s[A-F][+-]?\s)/g
+                const regex = /(?<Course>\b[A-Z]{3,4}\s+\d{3}[L]?)(?<Description>.*?)(?<Grade>\s[A-F][+-]?\s)/g
                 let match;
                 
                 // Loop through matches to find the specified course

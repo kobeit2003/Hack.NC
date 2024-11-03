@@ -20,6 +20,7 @@ const TutorDashboard = () => {
                     const docSnap = await getDoc(docRef);
                     if (docSnap.exists()) {
                         const userData = docSnap.data();
+                        console.log(userData)
                         setClasses(userData.classes || []);
                     }
                 } catch (error) {
@@ -54,6 +55,11 @@ const TutorDashboard = () => {
         console.log({file});
         const grades = await gradeCheck(file,classes);
         setGrades(grades);
+        const docRef = doc(db, 'users', currentUser.uid);
+        console.log(grades)
+            await updateDoc(docRef, {
+                 grades,
+            });
     }
     const handleRemoveClass = async (code) => {
         try {
