@@ -11,6 +11,7 @@ const ProfileSetup = ({ onRoleUpdate }) => {
   const [email, setEmail] = useState('');
   const [bio, setBio] = useState('');
   const [schedule, setSchedule] = useState('');
+  const [price, setPrice] = useState('');
   const { currentUser } = useAuth();
   const navigate = useNavigate();
 
@@ -27,6 +28,7 @@ const ProfileSetup = ({ onRoleUpdate }) => {
           setEmail(userData.email || '');
           setBio(userData.bio || '');
           setSchedule(userData.schedule || '');
+          setPrice(userData.price || '');
         }
       }
     };
@@ -39,7 +41,7 @@ const ProfileSetup = ({ onRoleUpdate }) => {
     
     try {
       const docRef = doc(db, 'users', currentUser.uid);
-      const updatedData = { name, role, phone, email, bio, schedule };
+      const updatedData = { name, role, phone, email, bio, schedule, price };
 
       await setDoc(docRef, updatedData, { merge: true });
       onRoleUpdate(role);
@@ -112,6 +114,14 @@ const ProfileSetup = ({ onRoleUpdate }) => {
                 <textarea
                   value={schedule}
                   onChange={(e) => setSchedule(e.target.value)}
+                  className="mt-2 block w-full p-3 text-lg border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-300"
+                />
+              </label>
+              <label className="block">
+                <span className="text-lg text-gray-700">Price Per Hour:</span>
+                <textarea
+                  value={price}
+                  onChange={(e) => setPrice(e.target.value)}
                   className="mt-2 block w-full p-3 text-lg border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-300"
                 />
               </label>
