@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import { doc, getDoc, setDoc } from 'firebase/firestore';
 import { db } from '../firebaseConfig';
+import UNCLogo from './UNC_Logo.png'; // Import the logo
 
 const ProfileSetup = ({ onRoleUpdate }) => {
   const [name, setName] = useState('');
@@ -54,8 +55,10 @@ const ProfileSetup = ({ onRoleUpdate }) => {
   return (
     <div className="flex justify-center items-center min-h-screen bg-blue-100">
       <div className="w-full max-w-lg bg-white p-10 rounded-lg shadow-lg">
-        {/* Title and Description Block */}
+        {/* Logo and Title */}
         <div className="mb-8 text-center">
+          {/* UNC Logo */}
+          <img src={UNCLogo} alt="UNC Logo" className="mx-auto mb-4 w-20 h-20" />
           <h1 className="text-4xl font-bold text-gray-800">Tarheel Tutor</h1>
           <p className="text-sm text-gray-600 mt-2">
             Connecting students and tutors for personalized academic support in UNC classes.
