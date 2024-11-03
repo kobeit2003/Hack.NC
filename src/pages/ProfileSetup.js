@@ -38,7 +38,7 @@ const ProfileSetup = ({ onRoleUpdate }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
+
     try {
       const docRef = doc(db, 'users', currentUser.uid);
       const updatedData = { name, role, phone, email, bio, schedule, price };
@@ -54,7 +54,12 @@ const ProfileSetup = ({ onRoleUpdate }) => {
   return (
     <div className="flex justify-center items-center min-h-screen bg-blue-100">
       <div className="w-full max-w-lg bg-white p-10 rounded-lg shadow-lg">
-        <h1 className="text-3xl font-bold mb-8 text-center text-gray-800">Set Up Your Profile</h1>
+        {/* Logo and Title */}
+        <div className="mb-8 text-center">
+          <h1 className="text-4xl font-bold text-gray-800">Tarheel Tutor</h1>
+        </div>
+
+        <h2 className="text-3xl font-bold mb-6 text-center text-gray-800">Set Up Your Profile</h2>
         <form onSubmit={handleSubmit} className="space-y-6">
           <label className="block">
             <span className="text-lg text-gray-700">Name:</span>
@@ -77,7 +82,7 @@ const ProfileSetup = ({ onRoleUpdate }) => {
               <option value="Tutor">Tutor</option>
             </select>
           </label>
-          
+
           {role === 'Tutor' && (
             <>
               <label className="block">
@@ -127,7 +132,7 @@ const ProfileSetup = ({ onRoleUpdate }) => {
               </label>
             </>
           )}
-          
+
           <button
             type="submit"
             className="w-full py-3 px-4 bg-blue-600 text-white font-semibold text-lg rounded hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
