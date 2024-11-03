@@ -50,66 +50,82 @@ const ProfileSetup = ({ onRoleUpdate }) => {
   };
 
   return (
-    <div>
-      <h1>Set Up Your Profile</h1>
-      <form onSubmit={handleSubmit}>
-        <label>
-          Name:
-          <input
-            type="text"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-            required
-          />
-        </label>
-        <label>
-          Role:
-          <select value={role} onChange={(e) => setRole(e.target.value)}>
-            <option value="Student">Student</option>
-            <option value="Tutor">Tutor</option>
-          </select>
-        </label>
-        
-        {role === 'Tutor' && ( // Conditionally render these fields for tutors
-          <>
-            <label>
-              Phone Number:
-              <input
-                type="text"
-                value={phone}
-                onChange={(e) => setPhone(e.target.value)}
-                placeholder="(555) 123-4567"
-                required
-              />
-            </label>
-            <label>
-              Email:
-              <input
-                type="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                required
-              />
-            </label>
-            <label>
-              Bio (Optional):
-              <textarea
-                value={bio}
-                onChange={(e) => setBio(e.target.value)}
-              />
-            </label>
-            <label>
-              Typical Schedule (Optional):
-              <textarea
-                value={schedule}
-                onChange={(e) => setSchedule(e.target.value)}
-              />
-            </label>
-          </>
-        )}
-        
-        <button type="submit">Save Profile</button>
-      </form>
+    <div className="flex justify-center items-center min-h-screen bg-blue-100">
+      <div className="w-full max-w-lg bg-white p-10 rounded-lg shadow-lg">
+        <h1 className="text-3xl font-bold mb-8 text-center text-gray-800">Set Up Your Profile</h1>
+        <form onSubmit={handleSubmit} className="space-y-6">
+          <label className="block">
+            <span className="text-lg text-gray-700">Name:</span>
+            <input
+              type="text"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              required
+              className="mt-2 block w-full p-3 text-lg border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-300"
+            />
+          </label>
+          <label className="block">
+            <span className="text-lg text-gray-700">Role:</span>
+            <select
+              value={role}
+              onChange={(e) => setRole(e.target.value)}
+              className="mt-2 block w-full p-3 text-lg border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-300"
+            >
+              <option value="Student">Student</option>
+              <option value="Tutor">Tutor</option>
+            </select>
+          </label>
+          
+          {role === 'Tutor' && (
+            <>
+              <label className="block">
+                <span className="text-lg text-gray-700">Phone Number:</span>
+                <input
+                  type="text"
+                  value={phone}
+                  onChange={(e) => setPhone(e.target.value)}
+                  placeholder="(555) 123-4567"
+                  required
+                  className="mt-2 block w-full p-3 text-lg border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-300"
+                />
+              </label>
+              <label className="block">
+                <span className="text-lg text-gray-700">Email:</span>
+                <input
+                  type="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  required
+                  className="mt-2 block w-full p-3 text-lg border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-300"
+                />
+              </label>
+              <label className="block">
+                <span className="text-lg text-gray-700">Bio (Optional):</span>
+                <textarea
+                  value={bio}
+                  onChange={(e) => setBio(e.target.value)}
+                  className="mt-2 block w-full p-3 text-lg border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-300"
+                />
+              </label>
+              <label className="block">
+                <span className="text-lg text-gray-700">Typical Schedule (Optional):</span>
+                <textarea
+                  value={schedule}
+                  onChange={(e) => setSchedule(e.target.value)}
+                  className="mt-2 block w-full p-3 text-lg border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-300"
+                />
+              </label>
+            </>
+          )}
+          
+          <button
+            type="submit"
+            className="w-full py-3 px-4 bg-blue-600 text-white font-semibold text-lg rounded hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
+          >
+            Save Profile
+          </button>
+        </form>
+      </div>
     </div>
   );
 };
