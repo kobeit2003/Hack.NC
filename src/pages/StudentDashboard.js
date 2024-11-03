@@ -1,22 +1,21 @@
 import React, { useState, useEffect } from 'react';
 import { db } from '../firebaseConfig';
-import { useAuth } from '../contexts/AuthContext'; // Ensure you import useAuth
+import { useAuth } from '../contexts/AuthContext';
 import { collection, query, where, getDocs } from 'firebase/firestore';
-import { useNavigate } from 'react-router-dom'; // Import useNavigate
+import { useNavigate } from 'react-router-dom';
 
 const StudentDashboard = () => {
-  const { currentUser, signOut } = useAuth(); // Access signOut and currentUser from AuthContext
+  const { currentUser, signOut } = useAuth();
   const [tutors, setTutors] = useState([]);
   const [filteredTutors, setFilteredTutors] = useState([]);
   const [classCodeFilter, setClassCodeFilter] = useState('');
-  const navigate = useNavigate(); // Initialize useNavigate
+  const navigate = useNavigate();
 
   useEffect(() => {
-    // Check if the user is authenticated before fetching tutors
     if (!currentUser) {
       console.error('No current user, redirecting to sign-in.');
-      navigate('/'); // Redirect to sign-in if not authenticated
-      return; // Exit early if there's no current user
+      navigate('/');
+      return;
     }
 
     const fetchTutors = async () => {
@@ -29,14 +28,14 @@ const StudentDashboard = () => {
           ...doc.data()
         }));
         setTutors(tutorList);
-        setFilteredTutors(tutorList); // Initialize filtered list with all tutors
+        setFilteredTutors(tutorList);
       } catch (error) {
         console.error('Error fetching tutors:', error);
       }
     };
 
     fetchTutors();
-  }, [currentUser]); // Re-run effect when currentUser changes
+  }, [currentUser]);
 
   const handleFilterChange = (e) => {
     const input = e.target.value;
@@ -48,45 +47,62 @@ const StudentDashboard = () => {
       );
       setFilteredTutors(filtered);
     } else {
-      setFilteredTutors(tutors); // Show all tutors if no filter is applied
+      setFilteredTutors(tutors);
     }
   };
 
   return (
-    <div>
-      <h1>Available Tutors</h1>
-      <button onClick={signOut}>Sign Out</button> {/* Sign Out Button */}
-      <button onClick={() => {
-  console.log('Navigating to Profile Setup');
-  navigate('/profile-setup'); // Navigate to Profile Setup
-}}>Go to Profile Setup</button>
+    <div className="flex justify-center items-center min-h-screen bg-blue-100">
+      <div className="w-full max-w-lg bg-white p-8 rounded-lg shadow-lg">
+        <h1 className="text-3xl font-bold mb-6 text-center text-gray-800">Available Tutors</h1>
 
-      <div>
-        <label>
-          Filter by Class Code:
+        <button
+          onClick={signOut}
+          className="mb-4 w-full py-2 px-4 bg-red-500 text-white font-semibold rounded hover:bg-red-600 focus:outline-none"
+        >
+          Sign Out
+        </button>
+        
+        <button
+          onClick={() => navigate('/profile-setup')}
+          className="mb-8 w-full py-2 px-4 bg-blue-500 text-white font-semibold rounded hover:bg-blue-600 focus:outline-none"
+        >
+          Go to Profile Setup
+        </button>
+
+        <div className="mb-6">
+          <label className="block text-lg text-gray-700 mb-2">Filter by Class Code:</label>
           <input
             type="text"
             value={classCodeFilter}
             onChange={handleFilterChange}
             placeholder="e.g., STOR-435"
+            className="block w-full p-3 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-300 mb-4"
           />
-        </label>
-      </div>
+        </div>
 
-      <div>
-      {filteredTutors.length > 0 ? (
-  <ul>
-    {filteredTutors.map((tutor) => (
-      <li key={tutor.id}>
-        <h2>{tutor.name}</h2>
-        <p>Classes: {tutor.classes ? tutor.classes.join(', ') : 'No classes listed'}</p>
-        <button onClick={() => navigate(`/tutor-profile/${tutor.id}`)}>View Profile</button>
-      </li>
-    ))}
-  </ul>
-) : (
-  <p>No tutors available for this class code.</p>
-)}
+        <div>
+          {filteredTutors.length > 0 ? (
+            <ul className="space-y-4">
+              {filteredTutors.map((tutor) => (
+                <li key={tutor.id} className="bg-gray-100 p-4 rounded-lg">
+                  <h2 className="text-xl font-semibold text-gray-800">{tutor.name}</h2>
+                  <p className="text-gray-700">
+                    Classes: {tutor.classes ? tutor.classes.join(', ') : 'No classes listed'}
+                  </p>
+                  <button
+                    onClick={() => navigate(`/tutor-profile/${tutor.id}`)}
+                    className="mt-3 w-full py-2 px-4 bg-green-500 text-white font-semibold rounded hover:bg-green-600 focus:outline-none"
+                  >
+                    View Profile
+                  </button>
+                </li>
+              ))}
+            </ul>
+          ) : (
+            <p className="text-center text-gray-700">No tutors available for this class code.</p>
+          )}
+        </div>
       </div>
     </div>
   );
