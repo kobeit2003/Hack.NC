@@ -3,10 +3,13 @@ import { useAuth } from '../contexts/AuthContext';
 import { db } from '../firebaseConfig';
 import { doc, getDoc, updateDoc, arrayUnion, arrayRemove } from 'firebase/firestore';
 import {gradeCheck} from './checkgrade'
+import { useNavigate } from 'react-router-dom';
+
 const TutorDashboard = () => {
     const { currentUser, signOut } = useAuth();
     const [classCode, setClassCode] = useState('');
     const [classes, setClasses] = useState([]);
+    const navigate = useNavigate();
 
     useEffect(() => {
         const fetchData = async () => {
@@ -44,8 +47,8 @@ const TutorDashboard = () => {
             console.error('Error adding class code:', error);
         }
     };
-    const handleFileSelection = async event => {
-        console.log({event});
+
+    const handleFileSelection = (event) => {
         const file = event.target.files[0];
         console.log({file});
         gradeCheck(file,"ANTH 322");
@@ -67,8 +70,18 @@ const TutorDashboard = () => {
             <div className="w-full max-w-lg bg-white p-8 rounded-lg shadow-lg">
                 <h1 className="text-3xl font-bold mb-6 text-center text-gray-800">Tutor Dashboard</h1>
                 
-                <button onClick={signOut} className="mb-6 w-full py-2 px-4 bg-red-500 text-white font-semibold rounded hover:bg-red-600 focus:outline-none">
+                <button
+                    onClick={signOut}
+                    className="mb-4 w-full py-2 px-4 bg-red-500 text-white font-semibold rounded hover:bg-red-600 focus:outline-none"
+                >
                     Sign Out
+                </button>
+
+                <button
+                    onClick={() => navigate('/profile-setup')}
+                    className="mb-6 w-full py-2 px-4 bg-blue-500 text-white font-semibold rounded hover:bg-blue-600 focus:outline-none"
+                >
+                    Back to Profile Setup
                 </button>
 
                 <p className="text-lg text-gray-700 text-center mb-8">Welcome, Tutor! Here you can manage your classes.</p>
@@ -86,15 +99,25 @@ const TutorDashboard = () => {
                         Add Class
                     </button>
                 </div>
-                <label>Upload transcript 
-                    <input onChange={handleFileSelection} type="file" className="w-full py-2 px-4 file:bg-blue-500 file:text-white font-semibold rounded hover:bg-blue-600 focus:outline-none"></input> 
+
+                <label className="block text-lg text-gray-700 mb-4">
+                    Upload Transcript:
+                    <input
+                        onChange={handleFileSelection}
+                        type="file"
+                        className="block w-full py-2 px-4 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-300"
+                    />
                 </label>
+
                 <h2 className="text-2xl font-semibold text-gray-800 mb-4">Your Classes</h2>
                 <ul className="space-y-2 mb-8">
                     {classes.map((code) => (
                         <li key={code} className="flex justify-between items-center bg-gray-100 p-3 rounded">
                             <span className="text-gray-700">{code}</span>
-                            <button onClick={() => handleRemoveClass(code)} className="py-1 px-2 bg-red-400 text-white rounded hover:bg-red-500">
+                            <button
+                                onClick={() => handleRemoveClass(code)}
+                                className="py-1 px-2 bg-red-400 text-white rounded hover:bg-red-500"
+                            >
                                 Remove
                             </button>
                         </li>
