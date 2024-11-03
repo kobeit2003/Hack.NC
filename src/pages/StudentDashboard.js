@@ -90,6 +90,9 @@ const StudentDashboard = () => {
                   <p className="text-gray-700">
                     Classes: {tutor.classes ? tutor.classes.join(', ') : 'No classes listed'}
                   </p>
+                  <p className="text-gray-700">
+                    Grades: {tutor.grades ? tutor.grade : 'No grades found'}
+                  </p>
                   <button
                     onClick={() => navigate(`/tutor-profile/${tutor.id}`)}
                     className="mt-3 w-full py-2 px-4 bg-green-500 text-white font-semibold rounded hover:bg-green-600 focus:outline-none"
