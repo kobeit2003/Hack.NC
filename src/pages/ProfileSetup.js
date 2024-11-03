@@ -54,12 +54,19 @@ const ProfileSetup = ({ onRoleUpdate }) => {
   return (
     <div className="flex justify-center items-center min-h-screen bg-blue-100">
       <div className="w-full max-w-lg bg-white p-10 rounded-lg shadow-lg">
-        {/* Logo and Title */}
+        {/* Title and Description Block */}
         <div className="mb-8 text-center">
           <h1 className="text-4xl font-bold text-gray-800">Tarheel Tutor</h1>
+          <p className="text-sm text-gray-600 mt-2">
+            Connecting students and tutors for personalized academic support in UNC classes.
+          </p>
         </div>
 
-        <h2 className="text-3xl font-bold mb-6 text-center text-gray-800">Set Up Your Profile</h2>
+        {/* Profile Setup Title */}
+        <div className="text-center mb-6">
+          <h2 className="text-3xl font-bold text-gray-800">Set Up Your Profile</h2>
+        </div>
+
         <form onSubmit={handleSubmit} className="space-y-6">
           <label className="block">
             <span className="text-lg text-gray-700">Name:</span>
