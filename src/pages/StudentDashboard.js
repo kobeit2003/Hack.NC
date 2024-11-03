@@ -75,7 +75,7 @@ const StudentDashboard = () => {
                   <h2 className="text-xl font-semibold text-gray-800">{tutor.name}</h2>
                   <p className="text-gray-700">
                     {/* Classes: {tutor.classes ? tutor.classes.join(', ') : 'No classes listed'} */}
-                    Classes: {tutor.classes && tutor.grades ? tutor.classes.map(c => `${c} (${tutor.grades.find(x => x.course === c)?.grade})`).join(',') : 'No classes listed'}
+                    Classes: {tutor.classes && tutor.grades ? tutor.classes.map(c => `${c} (${tutor.grades.find(x => x.course === c)?.grade ?? "No letter grade"})`).join(', ') : 'No classes listed'}
                   </p>
                   {/* <p className="text-gray-700">
                     Grades: {tutor.grades ? tutor.grades.map((grade) => <div>{grade.grade}</div>) : 'No grades found'}
