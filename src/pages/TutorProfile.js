@@ -44,6 +44,9 @@ const TutorProfile = () => {
         <p className="text-lg text-gray-700 mb-8">
           <strong>Typical Schedule:</strong> {tutorInfo.schedule || 'No schedule available.'}
         </p>
+        <p className="text-lg text-gray-700 mb-8">
+          <strong>Price Per Hour</strong> {tutorInfo.price || 'No price available.'}
+        </p>
         
         <button
           onClick={() => navigate('/student-dashboard')}
