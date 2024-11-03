@@ -44,7 +44,11 @@ const TutorDashboard = () => {
             console.error('Error adding class code:', error);
         }
     };
-
+    const handleFileSelection = async event => {
+        console.log({event});
+        const file = event.target.files[0];
+        console.log({file});
+    }
     const handleRemoveClass = async (code) => {
         try {
             const docRef = doc(db, 'users', currentUser.uid);
@@ -81,7 +85,9 @@ const TutorDashboard = () => {
                         Add Class
                     </button>
                 </div>
-
+                <label>Upload transcript 
+                    <input onChange={handleFileSelection} type="file" className="w-full py-2 px-4 file:bg-blue-500 file:text-white font-semibold rounded hover:bg-blue-600 focus:outline-none"></input> 
+                </label>
                 <h2 className="text-2xl font-semibold text-gray-800 mb-4">Your Classes</h2>
                 <ul className="space-y-2 mb-8">
                     {classes.map((code) => (
