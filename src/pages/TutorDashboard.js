@@ -51,7 +51,7 @@ const TutorDashboard = () => {
     const handleFileSelection = (event) => {
         const file = event.target.files[0];
         console.log({file});
-        gradeCheck(file,"ANTH 322");
+        gradeCheck(file,classes);
     }
     const handleRemoveClass = async (code) => {
         try {
@@ -92,7 +92,7 @@ const TutorDashboard = () => {
                         type="text"
                         value={classCode}
                         onChange={(e) => setClassCode(e.target.value)}
-                        placeholder="e.g., STOR-435 (Must be all Caps)"
+                        placeholder="e.g., STOR 435 (Must be all Caps)"
                         className="block w-full p-3 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-300 mb-4"
                     />
                     <button onClick={handleAddClass} className="w-full py-2 px-4 bg-blue-500 text-white font-semibold rounded hover:bg-blue-600 focus:outline-none">
