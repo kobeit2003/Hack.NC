@@ -56,20 +56,6 @@ const StudentDashboard = () => {
       <div className="w-full max-w-lg bg-white p-8 rounded-lg shadow-lg">
         <h1 className="text-3xl font-bold mb-6 text-center text-gray-800">Available Tutors</h1>
 
-        <button
-          onClick={signOut}
-          className="mb-4 w-full py-2 px-4 bg-red-500 text-white font-semibold rounded hover:bg-red-600 focus:outline-none"
-        >
-          Sign Out
-        </button>
-        
-        <button
-          onClick={() => navigate('/profile-setup')}
-          className="mb-8 w-full py-2 px-4 bg-blue-500 text-white font-semibold rounded hover:bg-blue-600 focus:outline-none"
-        >
-          Go to Profile Setup
-        </button>
-
         <div className="mb-6">
           <label className="block text-lg text-gray-700 mb-2">Filter by Class Code:</label>
           <input
@@ -92,7 +78,7 @@ const StudentDashboard = () => {
                   </p>
                   <button
                     onClick={() => navigate(`/tutor-profile/${tutor.id}`)}
-                    className="mt-3 w-full py-2 px-4 bg-green-500 text-white font-semibold rounded hover:bg-green-600 focus:outline-none"
+                    className="mt-3 w-full py-2 px-4 bg-blue-500 text-white font-semibold rounded hover:bg-blue-600 focus:outline-none"
                   >
                     View Profile
                   </button>
@@ -103,6 +89,20 @@ const StudentDashboard = () => {
             <p className="text-center text-gray-700">No tutors available for this class code.</p>
           )}
         </div>
+
+        <button
+          onClick={() => navigate('/profile-setup')}
+          className="mt-8 w-full py-2 px-4 bg-blue-500 text-white font-semibold rounded hover:bg-blue-600 focus:outline-none"
+        >
+          Go to Profile Setup
+        </button>
+
+        <button
+          onClick={signOut}
+          className="mt-4 w-full py-2 px-4 bg-red-500 text-white font-semibold rounded hover:bg-red-600 focus:outline-none"
+        >
+          Sign Out
+        </button>
       </div>
     </div>
   );

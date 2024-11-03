@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useAuth } from '../contexts/AuthContext';
 import { db } from '../firebaseConfig';
 import { doc, getDoc, updateDoc, arrayUnion, arrayRemove } from 'firebase/firestore';
-import {gradeCheck} from './checkgrade'
+import { gradeCheck } from './checkgrade';
 import { useNavigate } from 'react-router-dom';
 
 const TutorDashboard = () => {
@@ -35,7 +35,7 @@ const TutorDashboard = () => {
             alert('Please enter a valid class code (e.g., STOR 435).');
             return;
         }
-    
+
         try {
             const docRef = doc(db, 'users', currentUser.uid);
             await updateDoc(docRef, {
@@ -50,9 +50,10 @@ const TutorDashboard = () => {
 
     const handleFileSelection = (event) => {
         const file = event.target.files[0];
-        console.log({file});
-        gradeCheck(file,classes);
-    }
+        console.log({ file });
+        gradeCheck(file, classes);
+    };
+
     const handleRemoveClass = async (code) => {
         try {
             const docRef = doc(db, 'users', currentUser.uid);
@@ -69,22 +70,10 @@ const TutorDashboard = () => {
         <div className="flex justify-center items-center min-h-screen bg-blue-100">
             <div className="w-full max-w-lg bg-white p-8 rounded-lg shadow-lg">
                 <h1 className="text-3xl font-bold mb-6 text-center text-gray-800">Tutor Dashboard</h1>
-                
-                <button
-                    onClick={signOut}
-                    className="mb-4 w-full py-2 px-4 bg-red-500 text-white font-semibold rounded hover:bg-red-600 focus:outline-none"
-                >
-                    Sign Out
-                </button>
 
-                <button
-                    onClick={() => navigate('/profile-setup')}
-                    className="mb-6 w-full py-2 px-4 bg-blue-500 text-white font-semibold rounded hover:bg-blue-600 focus:outline-none"
-                >
-                    Back to Profile Setup
-                </button>
-
-                <p className="text-lg text-gray-700 text-center mb-8">Welcome, Tutor! Here you can manage your classes.</p>
+                <p className="text-lg text-gray-700 text-center mb-8">
+                    Welcome, Tutor! Here you can manage your classes.
+                </p>
 
                 <div className="mb-6">
                     <label className="block text-lg text-gray-700 mb-2">Add Class Code:</label>
@@ -95,7 +84,10 @@ const TutorDashboard = () => {
                         placeholder="e.g., STOR 435 (Must be all Caps)"
                         className="block w-full p-3 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-300 mb-4"
                     />
-                    <button onClick={handleAddClass} className="w-full py-2 px-4 bg-blue-500 text-white font-semibold rounded hover:bg-blue-600 focus:outline-none">
+                    <button
+                        onClick={handleAddClass}
+                        className="w-full py-2 px-4 bg-blue-500 text-white font-semibold rounded hover:bg-blue-600 focus:outline-none"
+                    >
                         Add Class
                     </button>
                 </div>
@@ -112,7 +104,10 @@ const TutorDashboard = () => {
                 <h2 className="text-2xl font-semibold text-gray-800 mb-4">Your Classes</h2>
                 <ul className="space-y-2 mb-8">
                     {classes.map((code) => (
-                        <li key={code} className="flex justify-between items-center bg-gray-100 p-3 rounded">
+                        <li
+                            key={code}
+                            className="flex justify-between items-center bg-gray-100 p-3 rounded"
+                        >
                             <span className="text-gray-700">{code}</span>
                             <button
                                 onClick={() => handleRemoveClass(code)}
@@ -123,6 +118,20 @@ const TutorDashboard = () => {
                         </li>
                     ))}
                 </ul>
+
+                <button
+                    onClick={() => navigate('/profile-setup')}
+                    className="mb-4 w-full py-2 px-4 bg-blue-500 text-white font-semibold rounded hover:bg-blue-600 focus:outline-none"
+                >
+                    Back to Profile Setup
+                </button>
+
+                <button
+                    onClick={signOut}
+                    className="w-full py-2 px-4 bg-red-500 text-white font-semibold rounded hover:bg-red-600 focus:outline-none"
+                >
+                    Sign Out
+                </button>
             </div>
         </div>
     );
