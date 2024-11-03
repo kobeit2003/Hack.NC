@@ -9,6 +9,7 @@ const TutorDashboard = () => {
     const { currentUser, signOut } = useAuth();
     const [classCode, setClassCode] = useState('');
     const [classes, setClasses] = useState([]);
+    const [grades,setGrades] = useState({});
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -48,10 +49,11 @@ const TutorDashboard = () => {
         }
     };
 
-    const handleFileSelection = (event) => {
+    const handleFileSelection = async (event) => {
         const file = event.target.files[0];
         console.log({file});
-        gradeCheck(file,classes);
+        const grades = await gradeCheck(file,classes);
+        setGrades(grades);
     }
     const handleRemoveClass = async (code) => {
         try {
