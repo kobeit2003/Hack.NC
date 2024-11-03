@@ -7,7 +7,7 @@ export async function gradeCheck(transcriptFile, classes) {
     const stripsClasses = classes.map(x => x.replaceAll(' ',''))
     console.log(classes)
     fileReader.readAsArrayBuffer(transcriptFile);
-
+    const returnArray = [];
     // Return a promise to handle the async file reading
     return new Promise((resolve, reject) => {
         fileReader.onload = async () => {
@@ -33,19 +33,22 @@ export async function gradeCheck(transcriptFile, classes) {
                 
                 // Loop through matches to find the specified course
                 while ((match = regex.exec(textContent)) !== null) {
-                    debugger;
-                    console.log(match.groups)
                    
+                    console.log(match.groups)
+                   const courseWithSpace = match.groups.Course;
                     const course = match.groups.Course.replaceAll(' ','');
+                    
                     if (stripsClasses.includes(course)){
-                        debugger;
-                        resolve(match.groups.Grade)
+                        
+                        //resolve(match.groups.Grade);
+                        returnArray.push({course: courseWithSpace,grade:match.groups.Grade.replaceAll(' ','')})
+                    
                     }
                     
                 }
 
-                // If course not found, resolve with null
-                resolve(null);
+                // We finished looping through all the lines of text
+                resolve(returnArray);
             } catch (error) {
                 reject('Error reading PDF:', error);
             }
