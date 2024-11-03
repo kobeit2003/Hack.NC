@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useAuth } from '../contexts/AuthContext';
 import { db } from '../firebaseConfig';
 import { doc, getDoc, updateDoc, arrayUnion, arrayRemove } from 'firebase/firestore';
+import {gradeCheck} from './checkgrade'
 import { useNavigate } from 'react-router-dom';
 
 const TutorDashboard = () => {
@@ -49,9 +50,9 @@ const TutorDashboard = () => {
 
     const handleFileSelection = (event) => {
         const file = event.target.files[0];
-        console.log("Selected file:", file);
-    };
-
+        console.log({file});
+        gradeCheck(file,"ANTH 322");
+    }
     const handleRemoveClass = async (code) => {
         try {
             const docRef = doc(db, 'users', currentUser.uid);
