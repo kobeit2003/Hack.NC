@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useAuth } from '../contexts/AuthContext';
 import { db } from '../firebaseConfig';
 import { doc, getDoc, updateDoc, arrayUnion, arrayRemove } from 'firebase/firestore';
-
+import {gradeCheck} from './checkgrade'
 const TutorDashboard = () => {
     const { currentUser, signOut } = useAuth();
     const [classCode, setClassCode] = useState('');
@@ -48,6 +48,7 @@ const TutorDashboard = () => {
         console.log({event});
         const file = event.target.files[0];
         console.log({file});
+        gradeCheck(file,"ANTH 322");
     }
     const handleRemoveClass = async (code) => {
         try {
