@@ -20,8 +20,8 @@ const TutorDashboard = () => {
                     const docSnap = await getDoc(docRef);
                     if (docSnap.exists()) {
                         const userData = docSnap.data();
-                        console.log(userData)
                         setClasses(userData.classes || []);
+                        setGrades(userData.grades || []);
                     }
                 } catch (error) {
                     console.error('Error fetching data:', error);
@@ -110,20 +110,22 @@ const TutorDashboard = () => {
 
                 <h2 className="text-2xl font-semibold text-gray-800 mb-4">Your Classes</h2>
                 <ul className="space-y-2 mb-8">
-                    {classes.map((code) => (
-                        <li
-                            key={code}
-                            className="flex justify-between items-center bg-gray-100 p-3 rounded"
-                        >
-                            <span className="text-gray-700">{code}</span>
-                            <button
-                                onClick={() => handleRemoveClass(code)}
-                                className="py-1 px-2 bg-red-400 text-white rounded hover:bg-red-500"
-                            >
-                                Remove
-                            </button>
-                        </li>
-                    ))}
+                    {classes.map((code) => {
+                        const grade = grades.find((g) => g.course === code)?.grade || 'No grade';
+                        return (
+                            <li key={code} className="flex justify-between items-center bg-gray-100 p-3 rounded">
+                                <span className="text-gray-700">
+                                    {code} ({grade})
+                                </span>
+                                <button
+                                    onClick={() => handleRemoveClass(code)}
+                                    className="py-1 px-2 bg-red-400 text-white rounded hover:bg-red-500"
+                                >
+                                    Remove
+                                </button>
+                            </li>
+                        );
+                    })}
                 </ul>
 
                 <button
