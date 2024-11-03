@@ -36,12 +36,13 @@ export async function gradeCheck(transcriptFile, classes) {
                    
                     console.log(match.groups)
                    const courseWithSpace = match.groups.Course;
+                   const courseWithOneSpace = match.groups.Course.replace(/\s+/g, ' ');
                     const course = match.groups.Course.replaceAll(' ','');
                     
                     if (stripsClasses.includes(course)){
                         
                         //resolve(match.groups.Grade);
-                        returnArray.push({course: courseWithSpace,grade:match.groups.Grade.replaceAll(' ','')})
+                        returnArray.push({course: courseWithOneSpace, grade:match.groups.Grade.replaceAll(' ','')})
                     
                     }
                     

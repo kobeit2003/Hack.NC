@@ -74,11 +74,12 @@ const StudentDashboard = () => {
                 <li key={tutor.id} className="bg-gray-100 p-4 rounded-lg">
                   <h2 className="text-xl font-semibold text-gray-800">{tutor.name}</h2>
                   <p className="text-gray-700">
-                    Classes: {tutor.classes ? tutor.classes.join(', ') : 'No classes listed'}
+                    {/* Classes: {tutor.classes ? tutor.classes.join(', ') : 'No classes listed'} */}
+                    Classes: {tutor.classes && tutor.grades ? tutor.classes.map(c => `${c} (${tutor.grades.find(x => x.course === c)?.grade})`).join(',') : 'No classes listed'}
                   </p>
-                  <p className="text-gray-700">
+                  {/* <p className="text-gray-700">
                     Grades: {tutor.grades ? tutor.grades.map((grade) => <div>{grade.grade}</div>) : 'No grades found'}
-                  </p>
+                  </p> */}
                   <button
                     onClick={() => navigate(`/tutor-profile/${tutor.id}`)}
                     className="mt-3 w-full py-2 px-4 bg-blue-500 text-white font-semibold rounded hover:bg-blue-600 focus:outline-none"
