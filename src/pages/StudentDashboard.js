@@ -78,6 +78,7 @@ const StudentDashboard = () => {
                   </p>
                   <p className="text-gray-700">
                     Grades: {tutor.grades ? tutor.grades : 'No grades found'}
+                    {tutor.grades.map((grade) => <div>{grade.grade}</div>)}
                   </p>
                   <button
                     onClick={() => navigate(`/tutor-profile/${tutor.id}`)}
